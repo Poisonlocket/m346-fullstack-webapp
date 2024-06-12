@@ -1,4 +1,5 @@
 import Particles from "@/components/ui/particles";
+import DevSignupForm from "@/app/signup/signup-form";
 
 export default function SignUp(){
     return(
@@ -17,11 +18,11 @@ export default function SignUp(){
                     "flex relative z-50 justify-center h-screen items-center my-auto mx-auto"
                 }
             >
-                <div className={"h-[36rem] bg-polar4 rounded-2xl w-[32rem] shadow-2xl"}>
-                    <div className={"text-7xl font-semibold w-full mt-7 pb-14 text-center"}>
+                <div className={"h-[45rem] bg-polar4 rounded-2xl w-[32rem] shadow-2xl"}>
+                    <div className={"text-5xl font-semibold w-full mt-7 pb-3 text-center"}>
                         Signup
                     </div>
-
+                    <DevSignupForm />
                 </div>
             </div>
         </main>
