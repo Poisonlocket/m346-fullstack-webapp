@@ -179,7 +179,7 @@ router.put("/api/edit-user", isAuthenticated, async (req, res) => {
         const query = 'UPDATE user_data SET username = $1, email = $2, password = $3, first_name = $4, last_name = $5, age = $6, about_me = $7 WHERE username = $8';
         const values = [req.body.username, req.body.email, req.body.password, req.body.name, req.body.last_name, req.body.age, req.body.about, req.session.user];7
         await client.query(query, values);
-        res.send()
+        res.send("You have updated your profile")
     } catch (err) {
         console.log(err)
         res.status(500).send("Database query error");
