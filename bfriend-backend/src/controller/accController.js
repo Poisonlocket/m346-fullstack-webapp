@@ -186,6 +186,25 @@ router.put("/api/edit-user", isAuthenticated, async (req, res) => {
     }
 });
 
+router.put("/api/edit-user/:id", isAuthenticated, async (req, res) => {
+    try {
+        const username = req.session.user;
+        const userIsAdmin = await isAdmin(client, username);
+
+        if (userIsAdmin) {
+            const query = 'UPDATE user_data SET username = $1, email = $2, password = $3, first_name = $4, last_name = $5, age = $6, about_me = $7 WHERE id = $8';
+            const values = [req.body.username, req.body.email, req.body.password, req.body.name, req.body.last_name, req.body.age, req.body.about, req.params.id];
+            await client.query(query, values);
+            res.send("You have updated the users profile")
+        } else {
+            res.status(403).send('Access denied. Admins only.')
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).send("Database query error");
+    }
+});
+
 
 
 module.exports = router;
