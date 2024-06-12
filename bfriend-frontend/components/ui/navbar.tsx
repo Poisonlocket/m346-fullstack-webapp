@@ -4,7 +4,7 @@ import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nex
 
 export default function Navbarprod() {
     return (
-        <Navbar className={"bg-frost1 backdrop-blur"}>
+        <Navbar className={"bg-frost1 z-50 backdrop-blur"}>
             <NavbarBrand >
 
                 <p className="font-bold text-polar2 text-inherit">B-FRIENDS</p>

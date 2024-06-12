@@ -4,7 +4,7 @@ import { IconProps } from "@radix-ui/react-icons/dist/types";
 export function OrbitingCirclesDemo() {
     return (
         <div className="relative flex h-[500px] w-full max-w-[32rem] items-center justify-center overflow-hidden ">
-      <span className="pointer-events-none z-50 whitespace-pre-wrap text-center text-8xl font-semibold leading-none text-frost2">
+      <span className="pointer-events-none z-40 whitespace-pre-wrap text-center text-8xl font-semibold leading-none text-frost2">
         Bfriend
       </span>
 

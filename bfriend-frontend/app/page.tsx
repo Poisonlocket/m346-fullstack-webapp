@@ -10,7 +10,7 @@ import {OrbitingCirclesDemo} from "@/components/ui/hero-orbit";
 export default function Home() {
   return (
     <NextUIProvider>
-    <Navbarprod></Navbarprod>
+    <Navbarprod ></Navbarprod>
     <main className="flex w-full min-h-screen flex-col bg-snow1 items-center justify-between ">
       <div className={"flex justify-around w-full py-auto lp-res:flex-row xs:flex-col"}>
           <div className={"flex flex-col"}>
@@ -26,7 +26,9 @@ export default function Home() {
       </div>
         
 
+        <div className={"h-[128rem]"}></div>
     </main>
+
     </NextUIProvider>
   );
 }
