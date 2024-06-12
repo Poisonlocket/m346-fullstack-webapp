@@ -100,7 +100,7 @@ router.get("/api/my-data", isAuthenticated, async (req, res) => {
     try {
         const query = 'SELECT * FROM user_data WHERE username = $1';
         const values = [req.session.user];
-        const result = await client.query(query, values);
+        const result = await client.query(query, values);x
         res.json(result.rows);
     } catch (err) {
         res.status(500).send("Database query error");
@@ -154,6 +154,24 @@ router.delete("/api/delete", isAuthenticated, async (req, res) => {
     }
 });
 
+router.delete("/api/delete/:id", isAuthenticated, async (req, res) => {
+    try {
+        const username = req.session.user;
+        const userIsAdmin = await isAdmin(client, username);
+
+        if (userIsAdmin) {
+            const query = 'DELETE FROM user_data WHERE id = $1';
+            const values = [req.params.id];
+            await client.query(query, values);
+            res.send(`Deleted user with id: ${req.params.id}`);
+        } else {
+            res.send("Access denied. Admins only.")
+        }
+    } catch (err) {
+        res.status(500).send("Database query error");
+    }
+});
+
 router.put("/api/get-admin", isAuthenticated, async (req, res) => {
     try {
         const username = req.session.user;
@@ -165,9 +183,9 @@ router.put("/api/get-admin", isAuthenticated, async (req, res) => {
             const query = 'UPDATE user_data SET is_admin = $1 WHERE username = $2';
             const values = [true, req.session.user];
             await client.query(query, values);
-            res.send('Du bist jetzt ein Administrator');
+            res.send("You're already an Admin");
         } else {
-            res.send("Das Passwort ist falsch!");
+            res.send('The Password is wrong!');
         }
     } catch (err) {
         res.status(500).send("Database query error");
