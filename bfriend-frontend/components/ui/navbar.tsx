@@ -7,7 +7,7 @@ export default function Navbarprod() {
         <Navbar className={"bg-frost1 z-50 backdrop-blur"}>
             <NavbarBrand >
 
-                <p className="font-bold text-polar2 text-inherit">B-FRIENDS</p>
+                <p className="font-bold text-polar2 text-inherit">B-FRIEND</p>
             </NavbarBrand>
             <NavbarContent  className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>

@@ -2,6 +2,7 @@
 
 import {NextUIProvider} from "@nextui-org/react";
 import Navbarprod from "@/components/ui/navbar"
+import Footerprod from "@/components/ui/footer";
 
 import {FadeText} from "@/components/ui/fade-text";
 import {OrbitingCirclesDemo} from "@/components/ui/hero-orbit";
@@ -24,11 +25,9 @@ export default function Home() {
 
           <OrbitingCirclesDemo></OrbitingCirclesDemo>
       </div>
-        
 
-        <div className={"h-[128rem]"}></div>
     </main>
-
+        <Footerprod></Footerprod>
     </NextUIProvider>
   );
 }
