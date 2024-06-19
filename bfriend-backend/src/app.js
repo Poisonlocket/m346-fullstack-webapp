@@ -5,6 +5,7 @@ const cors = require("cors")
 const authentification = require("./controller/authController.js")
 const accountManagement = require("./controller/accController.js")
 const dataManagement = require("./controller/dataController.js")
+const userProfiles = require("./controller/profileController")
 
 const app = express()
 const port = 9000
@@ -22,6 +23,7 @@ app.use(session({
     cookie: {}
 }))
 
+app.use("", userProfiles)
 app.use("", authentification)
 app.use("", accountManagement)
 app.use("", dataManagement)
