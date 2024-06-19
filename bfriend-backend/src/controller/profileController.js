@@ -79,20 +79,30 @@ const getUserHobbies = async (client, id) => {
 router.get("/api/random-user", isAuthAndActive, async (req, res) => {
     try {
         const username = req.session.user;
-        const query = 'SELECT * FROM user_data WHERE active_profile = true AND username != $1 ORDER BY RANDOM() LIMIT 1';
+
+        const query = `
+            SELECT u2.id, u2.first_name, u2.last_name, u2.age
+            FROM user_data u1
+            JOIN user_hobbies uh1 ON u1.id = uh1.user_id
+            JOIN user_hobbies uh2 ON uh1.hobby_id = uh2.hobby_id
+            JOIN user_data u2 ON uh2.user_id = u2.id
+            WHERE u1.username = $1
+              AND u2.active_profile = true
+              AND u2.username != $1
+            ORDER BY RANDOM()
+            LIMIT 1;
+        `;
         const values = [username];
         const result = await client.query(query, values);
-
-
 
         if (result.rows.length === 0) {
             return res.status(404).send('No active users found');
         }
 
-        const { first_name, last_name, age } = result.rows[0];
-        const id = result.rows[0].id
-        const hobbies = await getUserHobbies(client, id)
-        res.json({ first_name, last_name, age, hobbies});
+        const { first_name, last_name, age, id } = result.rows[0];
+        const hobbies = await getUserHobbies(client, id);
+
+        res.json({ first_name, last_name, age, hobbies });
     } catch (error) {
         res.status(500).send(`Error retrieving active user: ${error.message}`);
     }
