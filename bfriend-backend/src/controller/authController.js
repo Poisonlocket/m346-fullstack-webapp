@@ -45,6 +45,7 @@ router.post("/api/registration", async (req, res) => {
         const username = JSON.stringify(req.body.username)
         const email = JSON.stringify(req.body.email)
         const password = JSON.stringify(SHA256(req.body.password).words)
+        const about = JSON.stringify(req.body.about)
         
         if (!username || !email || !password || !name || !lastname || !age) {
             return res.status(400).send('Missing required fields');
@@ -52,8 +53,8 @@ router.post("/api/registration", async (req, res) => {
         
         req.session.user = username
         
-        const query = "INSERT INTO user_data (first_name, last_name, age, username, email, password) VALUES ($1, $2, $3, $4, $5, $6)";
-        const values = [name , lastname, age, username, email, password]
+        const query = "INSERT INTO user_data (first_name, last_name, age, username, email, password, about_me) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+        const values = [name , lastname, age, username, email, password, about]
 
         try {
             await client.query(query, values);
@@ -65,7 +66,39 @@ router.post("/api/registration", async (req, res) => {
     } else {
         res.redirect("/login")
     }
-})
+});
+
+const getUserId = async (username) => {
+    const query = "SELECT id FROM user_data WHERE username = $1";
+    const values = [username];
+    const result = await client.query(query, values);
+    if (result.rows.length === 0) {
+        throw new Error('User not found');
+    }
+    return result.rows[0].id;
+};
+
+router.post("/api/registration-hobbies", async (req, res) => {
+    if (req.session.auth === "auth") {
+        try {
+            const user = req.session.user;
+            const userId = await getUserId(user);
+            const hobbies = req.body.hobbies;
+
+            for (const hobbyId of hobbies) {
+                const query = "INSERT INTO user_hobbies (user_id, hobby_id) VALUES ($1, $2) ON CONFLICT (user_id, hobby_id) DO NOTHING";
+                const values = [userId, hobbyId];
+                await client.query(query, values);
+            }
+
+            res.status(200).send("Hobbies registered successfully!");
+        } catch (error) {
+            res.status(500).send(`Error registering hobbies: ${error.message}`);
+        }
+    } else {
+        res.send('ERROR: Not Logged in.');
+    }
+});
 
 router.post("/api/login", async (req, res) => {
     if (req.session.auth !== "auth") {
