@@ -65,6 +65,6 @@ Dont forget your .env:
 - ADMIN_PW
 
 ## Special
-we hid some meme routes in the frontend if you want to search for them feel free otherwise check them here
-> /418 some cool ascii art <br>
-> /repo redirects you to the github repo
+we hid some meme routes in the frontend if you want to search for them feel free otherwise check them here or with the link on your localhost
+> [/418](https://localhost:3000/418) some cool ascii art <br>
+> [/repo](https://localhost:3000/repo) redirects you to the github repo
