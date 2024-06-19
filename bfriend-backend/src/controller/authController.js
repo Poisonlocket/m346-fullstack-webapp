@@ -33,7 +33,7 @@ router.get("/api/login", (req, res) => {
     if (req.session.auth === "auth") {
         res.redirect("/")
     } else {
-        res.send("Nothing here")
+        res.send("Not yet implemented.")
     }
 })
 
